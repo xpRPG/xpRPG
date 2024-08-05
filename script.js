@@ -1,35 +1,64 @@
-// Firebase configuration
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  databaseURL: "YOUR_DATABASE_URL",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBZseNZmomSdKzeSykrSIRafzoop9UKe48",
+  authDomain: "xprpg-e24f1.firebaseapp.com",
+  databaseURL: "https://xprpg-e24f1-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "xprpg-e24f1",
+  storageBucket: "xprpg-e24f1.appspot.com",
+  messagingSenderId: "572521034105",
+  appId: "1:572521034105:web:0aa0db131973cb760affa8",
+  measurementId: "G-7M9XBRQC62"
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.database();
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth();
+const database = getDatabase(app);
 
-// Example: User Authentication
-auth.onAuthStateChanged(user => {
+// Handle user authentication state
+onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log('User is signed in:', user);
-    // Fetch and display user data
+    // User is signed in, display user info and load data
+    document.getElementById('user-info').innerHTML = `<p>Welcome, ${user.displayName || user.email}</p>`;
+    loadUserData(user.uid);
   } else {
-    console.log('No user signed in');
-    // Show login form
+    // No user is signed in, redirect to login or show a login prompt
+    document.getElementById('user-info').innerHTML = `<p>Please sign in.</p>`;
+    // Redirect to login page or display login form
   }
 });
 
-// Example: Fetching data from database
-function fetchData() {
-  db.ref('users/USER_ID').once('value').then(snapshot => {
+// Load user data from Firebase
+function loadUserData(uid) {
+  const userRef = ref(database, 'users/' + uid);
+  onValue(userRef, (snapshot) => {
     const data = snapshot.val();
-    console.log('User data:', data);
-    // Update UI with user data
+    displayUserData(data);
   });
 }
+
+// Display user data in the UI
+function displayUserData(data) {
+  // Populate quests, XP, etc. in the UI
+  document.getElementById('main-quests').innerHTML = JSON.stringify(data.mainQuests);
+  document.getElementById('side-quests').innerHTML = JSON.stringify(data.sideQuests);
+  document.getElementById('daily-quests').innerHTML = JSON.stringify(data.dailyQuests);
+}
+
+// Logout functionality
+document.getElementById('logout-button').addEventListener('click', () => {
+  signOut(auth).then(() => {
+    // Sign-out successful.
+    console.log("User signed out");
+  }).catch((error) => {
+    // An error happened.
+    console.error("Error signing out:", error);
+  });
+});
