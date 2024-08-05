@@ -3,31 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Life RPG Dashboard</title>
+  <title>xpRPG Sign In</title>
   <link rel="stylesheet" href="styles.css">
-  <script type="module" src="script.js" defer></script>
+  <script type="module" src="index.js" defer></script>
 </head>
 <body>
-  <div id="app">
-    <header>
-      <h1>Life RPG Dashboard</h1>
-      <div id="user-info"></div>
-    </header>
-    <main>
-      <section id="quests">
-        <h2>Quests</h2>
-        <div id="main-quests"></div>
-        <div id="side-quests"></div>
-        <div id="daily-quests"></div>
-      </section>
-      <section id="settings">
-        <h2>Settings</h2>
-        <button id="logout-button">Logout</button>
-      </section>
-    </main>
-    <footer>
-      <p>&copy; 2024 Life RPG</p>
-    </footer>
+  <div id="login-container" class="centered">
+    <h1>Welcome to xpRPG</h1>
+    <div id="auth-container">
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
+      <button id="sign-up-button">Sign Up</button>
+      <button id="sign-in-button">Sign In</button>
+      <button id="google-sign-in-button">Sign In with Google</button>
+    </div>
   </div>
 </body>
 </html>
