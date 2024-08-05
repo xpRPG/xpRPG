@@ -3,25 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Life RPG</title>
+  <title>Life RPG Dashboard</title>
   <link rel="stylesheet" href="styles.css">
+  <script type="module" src="script.js" defer></script>
 </head>
 <body>
   <div id="app">
-    <h1>Life RPG Dashboard</h1>
-    <div id="user-info">
-      <!-- User info and XP bar -->
-    </div>
-    <div id="quests">
-      <!-- Main, Side, Daily Quests -->
-    </div>
-    <div id="settings">
-      <!-- Settings and customization -->
-    </div>
+    <header>
+      <h1>Life RPG</h1>
+      <div id="user-info"></div>
+    </header>
+    <main>
+      <section id="quests">
+        <h2>Quests</h2>
+        <div id="main-quests"></div>
+        <div id="side-quests"></div>
+        <div id="daily-quests"></div>
+      </section>
+      <section id="settings">
+        <h2>Settings</h2>
+        <button id="logout-button">Logout</button>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2024 Life RPG</p>
+    </footer>
   </div>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>
