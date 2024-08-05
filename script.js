@@ -29,9 +29,8 @@ onAuthStateChanged(auth, (user) => {
     document.getElementById('user-info').innerHTML = `<p>Welcome, ${user.displayName || user.email}</p>`;
     loadUserData(user.uid);
   } else {
-    // No user is signed in, redirect to login or show a login prompt
-    document.getElementById('user-info').innerHTML = `<p>Please sign in.</p>`;
-    // Redirect to login page or display login form
+    // No user is signed in, show login message or form
+    document.getElementById('user-info').innerHTML = `<p>Please sign in to view your quests.</p>`;
   }
 });
 
@@ -46,19 +45,16 @@ function loadUserData(uid) {
 
 // Display user data in the UI
 function displayUserData(data) {
-  // Populate quests, XP, etc. in the UI
-  document.getElementById('main-quests').innerHTML = JSON.stringify(data.mainQuests);
-  document.getElementById('side-quests').innerHTML = JSON.stringify(data.sideQuests);
-  document.getElementById('daily-quests').innerHTML = JSON.stringify(data.dailyQuests);
+  document.getElementById('main-quests').innerHTML = data ? JSON.stringify(data.mainQuests) : 'No main quests available.';
+  document.getElementById('side-quests').innerHTML = data ? JSON.stringify(data.sideQuests) : 'No side quests available.';
+  document.getElementById('daily-quests').innerHTML = data ? JSON.stringify(data.dailyQuests) : 'No daily quests available.';
 }
 
 // Logout functionality
 document.getElementById('logout-button').addEventListener('click', () => {
   signOut(auth).then(() => {
-    // Sign-out successful.
     console.log("User signed out");
   }).catch((error) => {
-    // An error happened.
     console.error("Error signing out:", error);
   });
 });
